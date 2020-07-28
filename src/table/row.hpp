@@ -6,7 +6,7 @@
 
 #include <unordered_map>
 #include <vector>
-#include "../cells/cell.hpp"
+#include "../../src/cells/cell.hpp"
 
 class Row {
  private:
@@ -14,14 +14,15 @@ class Row {
   std::vector<std::string> column_ids;
 
  public:
-  operator std::string() {
+  explicit operator std::string() {
     std::string string_row;
-    std::string separator = "";
+    std::string separator;
     for (const std::string &column_id : column_ids) {
       string_row += separator;
-      string_row += cells_[column_id]->Evaluate();
+      string_row += std::to_string(cells_[column_id]->Evaluate());
       separator = ",";
     }
+    string_row += "\r\n";
 
     return string_row;
   }
