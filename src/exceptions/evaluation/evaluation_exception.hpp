@@ -5,7 +5,7 @@
 #pragma once
 
 #include <exception>
-#include "../../../cells/cell.hpp"
+#include "../../../src/cells/cell.hpp"
 
 class EvaluationException : public std::exception {
  public:

@@ -15,6 +15,9 @@ namespace cell {
  class Cell {
   public:
    Cell(std::string_view column_id, size_t row_id);
+
+   virtual ~Cell() = default;
+
    [[nodiscard]] EvaluationState GetState() const;
 
    void SetState(EvaluationState state);

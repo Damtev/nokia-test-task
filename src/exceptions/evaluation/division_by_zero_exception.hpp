@@ -5,7 +5,7 @@
 #pragma once
 
 #include "evaluation_exception.hpp"
-#include "../../../cells/binary_operation/division.hpp"
+#include "../../../src/cells/binary_operation/division.hpp"
 
 using namespace cell::binary_operation;
 

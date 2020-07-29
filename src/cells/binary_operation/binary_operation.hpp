@@ -10,23 +10,28 @@ namespace cell::binary_operation {
 
  using namespace cell::binary_operation;
 
-  class BinaryOperation : public Cell {
-   public:
-    BinaryOperation(std::string_view column_id, size_t row_id, Cell *left, Cell *right);
+ class BinaryOperation : public Cell {
+  public:
+   BinaryOperation(std::string_view column_id, size_t row_id);
 
-    [[nodiscard]] Cell *GetFirstOperand() const;
+   BinaryOperation(std::string_view column_id, size_t row_id, Cell *left, Cell *right);
 
-    void SetFirstOperand(Cell *first_operand);
+   ~BinaryOperation();
 
-    [[nodiscard]] Cell *GetSecondOperand() const;
+   [[nodiscard]] Cell *GetFirstOperand() const;
 
-    void SetSecondOperand(Cell *second_operand);
+   void SetFirstOperand(Cell *first_operand);
 
-    long long int Evaluate() override final;
+   [[nodiscard]] Cell *GetSecondOperand() const;
 
-   protected:
-    Cell *first_operand_ = nullptr;
-    Cell *second_operand_ = nullptr;
-    virtual long long Operation(long long first_value, long long second_value) = 0;
-  };
+   void SetSecondOperand(Cell *second_operand);
+
+   long long int Evaluate() override final;
+
+  protected:
+   Cell *first_operand_ = nullptr;
+   Cell *second_operand_ = nullptr;
+
+   virtual long long Operation(long long first_value, long long second_value) = 0;
+ };
 }
