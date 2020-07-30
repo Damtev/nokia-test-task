@@ -54,7 +54,10 @@ add_library(table_processor STATIC
         ${PARSING_EXCEPTION_SOURCES_DIR}non_unique_row_id_exception.hpp)
 
 set(SOURCE_EXE ${SOURCES_DIR}main.cpp)
+set(TEST_EXE ${SOURCES_DIR}test.cpp)
 
-add_executable(test_task ${SOURCE_EXE})
+add_executable(test_task_main ${SOURCE_EXE})
+add_executable(test_task_test ${TEST_EXE})
 
-target_link_libraries(test_task table_processor)
+target_link_libraries(test_task_main table_processor)
+target_link_libraries(test_task_test table_processor)

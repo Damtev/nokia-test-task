@@ -9,7 +9,7 @@
 
 int main(int argc, char *argv[]) {
   if (argc < 2) {
-    std::cout << "Expected at least 1 argument - path_ to CSV file";
+    std::cerr << "Expected at least 1 argument - path to CSV file";
     return 0;
   }
 
