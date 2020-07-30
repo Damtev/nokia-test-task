@@ -8,12 +8,10 @@
 #include "../exceptions/parsing/no_such_path_exception.hpp"
 #include "../exceptions/parsing/not_csv_file_exception.hpp"
 #include "../exceptions/parsing/invalid_format_exception.hpp"
+#include "../exceptions/parsing/non_unique_column_id_exception.hpp"
+#include "../exceptions/parsing/non_unique_row_id_exception.hpp"
 #include "../exceptions/parsing/no_such_cell_exception.hpp"
 #include "../cells/unary_operation/const.hpp"
-#include "../cells/binary_operation/addition.hpp"
-#include "../cells/binary_operation/subtraction.hpp"
-#include "../cells/binary_operation/multiplication.hpp"
-#include "../cells/binary_operation/division.hpp"
 #include "../cells/binary_operation/binary_operation_factory.hpp"
 #include <regex>
 #include <unordered_set>
@@ -43,13 +41,14 @@ void Table::Parse(const path &path, Table &table) {
   }
 
   std::ifstream file_stream(path);
-//  try {
+  try {
     ParseHeader(path, file_stream, table);
     ParseRows(path, file_stream, table);
-//  } catch (const ParsingException &parsing_exception) {
-//    file_stream.close();
-//    throw parsing_exception;
-//  }
+  } catch (const ParsingException &parsing_exception) {
+    file_stream.close();
+    std::exception_ptr parsing_exception_ptr = std::current_exception();
+    std::rethrow_exception(parsing_exception_ptr);
+  }
 }
 
 void Table::ParseHeader(const path &path, std::ifstream &file_stream, Table &table) {
@@ -57,7 +56,7 @@ void Table::ParseHeader(const path &path, std::ifstream &file_stream, Table &tab
   std::getline(file_stream, header);
   std::regex header_regex(kHeaderRegex);
   if (!std::regex_match(header, header_regex)) {
-    throw InvalidFormatException(path, header);
+    throw InvalidFormatException(path, header, TablePlaceType::kLine);
   }
 
   std::istringstream header_splitter(header);
@@ -66,7 +65,7 @@ void Table::ParseHeader(const path &path, std::ifstream &file_stream, Table &tab
   std::getline(header_splitter, column_id, kCellsSeparator); // skip empty column_id
   while (std::getline(header_splitter, column_id, kCellsSeparator)) {
     if (used_columns.count(column_id) != 0) {
-      throw InvalidFormatException(path, header);
+      throw NonUniqueColumnIdException(path, column_id);
     }
 
     used_columns.insert(column_id);
@@ -82,11 +81,16 @@ void Table::ParseRows(const path &path, std::ifstream &file_stream, Table &table
     std::istringstream row_splitter(row_string);
     std::string row_id_string;
     std::getline(row_splitter, row_id_string, kCellsSeparator); // read row id
+    std::regex row_id_regex(kRowIdRegex);
+    if (!std::regex_match(row_id_string, row_id_regex)) {
+      throw InvalidFormatException(path, row_id_string, TablePlaceType::kCell);
+    }
+
     std::stringstream row_id_stream(row_id_string);
     size_t row_id;
     row_id_stream >> row_id;
     if (used_rows.count(row_id) != 0) {
-      throw InvalidFormatException(path, row_string);
+      throw NonUniqueRowIdException(path, row_id);
     }
     used_rows.insert(row_id);
     table.row_ids_.push_back(row_id);
@@ -99,7 +103,7 @@ void Table::ParseRows(const path &path, std::ifstream &file_stream, Table &table
       std::string column_id = table.column_ids_[cur_column_number];
       std::regex cell_regex(kCellRegex);
       if (!std::regex_match(cell_value_string, cell_regex)) {
-        throw InvalidFormatException(path, cell_value_string);
+        throw InvalidFormatException(path, cell_value_string, TablePlaceType::kCell);
       }
 
       row->column_ids_.push_back(column_id);
@@ -230,4 +234,9 @@ Table::~Table() {
   for (const size_t row_id : row_ids_) {
     delete rows_[row_id];
   }
+}
+
+std::ostream &operator<<(std::ostream &os, Table &table) {
+  os << (std::string) table;
+  return os;
 }

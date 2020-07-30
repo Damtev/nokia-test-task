@@ -8,6 +8,7 @@
 #include <string>
 #include <unordered_map>
 #include <filesystem>
+#include <ostream>
 #include "row.hpp"
 #include "global_constants.hpp"
 #include "../cells/cell.hpp"
@@ -76,5 +77,5 @@ class Table {
 
   void SetRows(const std::unordered_map<std::string, Row> &rows);
 
-  friend std::istream &operator>>(std::istream &in, Table &table);
+  friend std::ostream &operator<<(std::ostream &os, Table &table);
 };
