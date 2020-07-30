@@ -16,8 +16,6 @@ namespace cell::binary_operation {
 
    BinaryOperation(std::string_view column_id, size_t row_id, Cell *left, Cell *right);
 
-   ~BinaryOperation();
-
    [[nodiscard]] Cell *GetFirstOperand() const;
 
    void SetFirstOperand(Cell *first_operand);
@@ -26,7 +24,7 @@ namespace cell::binary_operation {
 
    void SetSecondOperand(Cell *second_operand);
 
-   long long int Evaluate() override final;
+   long long int Evaluate() final;
 
   protected:
    Cell *first_operand_ = nullptr;

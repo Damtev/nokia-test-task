@@ -29,7 +29,7 @@ namespace std {
      return std::hash<std::string>()(table_position.column_id) ^ std::hash<size_t>()(table_position.row_id);
    }
  };
-};
+}
 
 void Table::Parse(const path &path, Table &table) {
   if (!exists(path)) {

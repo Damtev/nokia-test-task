@@ -13,6 +13,7 @@ namespace cell::binary_operation {
  class Division final : public BinaryOperation {
   public:
    Division(std::string_view column_id, size_t row_id) : BinaryOperation(column_id, row_id) {}
+
   protected:
    long long int Operation(long long int first_value, long long int second_value) override;
  };

@@ -7,7 +7,7 @@
 #include "exceptions/parsing/parsing_exception.hpp"
 #include "exceptions/evaluation/evaluation_exception.hpp"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   if (argc < 2) {
     std::cout << "Expected at least 1 argument - path to CSV file";
     return 0;

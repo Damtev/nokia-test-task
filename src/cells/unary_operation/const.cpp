@@ -6,12 +6,9 @@
 
 using namespace cell::unary_operation;
 
-Const::Const(std::string_view column_id, const size_t row_id) : Cell(column_id, row_id) {
+Const::Const(std::string_view column_id, const size_t row_id, long long int value) : Cell(column_id, row_id),
+                                                                                     value_(value) {
   state_ = EvaluationState::kEvaluated;
-}
-
-Const::Const(std::string_view column_id, const size_t row_id, long long int value) : Const(column_id, row_id) {
-  value_ = value;
 }
 
 long long int Const::GetValue() const {

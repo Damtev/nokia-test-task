@@ -13,7 +13,6 @@ extern inline const char *const kLineSeparator() {
   return "\r";
 #endif
 }
-//  extern const char *const kLineSeparator = "\r\n";
 
 extern inline const char kCellsSeparator = ',';
 

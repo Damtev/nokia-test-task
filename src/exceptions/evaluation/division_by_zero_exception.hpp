@@ -14,7 +14,8 @@ class DivisionByZeroException final : public EvaluationException {
   const std::string explanation;
  public:
   DivisionByZeroException(Division *division_cell)
-      : EvaluationException(division_cell), explanation("Value at cell " + division_cell->GetPosition() + " is divided by zero") {}
+      : EvaluationException(division_cell),
+        explanation("Value at cell " + division_cell->GetPosition() + " is divided by zero") {}
 
   const char *what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW override {
     return explanation.c_str();

@@ -37,7 +37,7 @@ class Table {
  private:
   std::vector<std::string> column_ids_;
   std::vector<size_t> row_ids_;
-  std::unordered_map<size_t, Row*> rows_;
+  std::unordered_map<size_t, Row *> rows_;
 
   std::string ReturnHeader() const;
 
@@ -72,10 +72,6 @@ class Table {
   std::vector<size_t> &GetRowIds();
 
   void SetRowIds(const std::vector<size_t> &row_ids);
-
-  std::unordered_map<std::string, Row> &GetRows();
-
-  void SetRows(const std::unordered_map<std::string, Row> &rows);
 
   friend std::ostream &operator<<(std::ostream &os, Table &table);
 };

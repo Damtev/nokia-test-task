@@ -10,15 +10,10 @@ using namespace cell::binary_operation;
 
 BinaryOperation::BinaryOperation(std::string_view column_id, size_t row_id) : Cell(column_id, row_id) {}
 
-BinaryOperation::BinaryOperation(std::string_view column_id, const size_t row_id, Cell *left, Cell *right) : BinaryOperation(column_id, row_id) {
+BinaryOperation::BinaryOperation(std::string_view column_id, const size_t row_id, Cell *left, Cell *right)
+    : BinaryOperation(column_id, row_id) {
   first_operand_ = left;
   second_operand_ = right;
-}
-
-BinaryOperation::~BinaryOperation() {
-  // todo: it fails if uncomment
-//  delete first_operand_;
-//  delete second_operand_;
 }
 
 Cell *BinaryOperation::GetFirstOperand() const {

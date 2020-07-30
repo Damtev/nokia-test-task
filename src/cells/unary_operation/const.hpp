@@ -10,17 +10,15 @@ namespace cell::unary_operation {
  using namespace cell::unary_operation;
 
  class Const final : public Cell {
-
+  private:
    long long value_;
 
   public:
    Const() = delete;
 
-   Const(std::string_view column_id, const size_t row_id);
-
    Const(std::string_view column_id, size_t row_id, long long int value);
 
-   ~Const() = default;
+   ~Const() override = default;
 
    [[nodiscard]] long long int GetValue() const;
 
