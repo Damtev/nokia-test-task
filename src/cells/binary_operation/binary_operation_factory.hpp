@@ -26,6 +26,8 @@ namespace cell::binary_operation {
        return new Multiplication(column_id, row_id);
      case BinaryOperator::kDivisionOperator:
        return new Division(column_id, row_id);
+     default:
+       throw std::runtime_error("Unknown binary operator");
    }
  }
 }

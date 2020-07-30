@@ -10,7 +10,7 @@
 #include <filesystem>
 #include <ostream>
 #include "row.hpp"
-#include "global_constants.hpp"
+#include "../global_constants.hpp"
 #include "../cells/cell.hpp"
 
 struct TablePosition {
@@ -45,7 +45,7 @@ class Table {
 
   static void ParseRows(const std::filesystem::path &path, std::ifstream &file_stream, Table &table);
 
-  static cell::Cell *GetOperand(const std::string operand_string,
+  static cell::Cell *GetOperand(const std::string& operand_string,
                                 const std::filesystem::path &path,
                                 Table &table,
                                 const std::string &cell_value_string,

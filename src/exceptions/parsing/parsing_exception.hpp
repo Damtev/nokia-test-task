@@ -10,12 +10,12 @@
 
 class ParsingException : public std::exception {
  public:
-  explicit ParsingException(const std::filesystem::path &path) : path(path) {}
+  explicit ParsingException(const std::filesystem::path &path) : path_(path) {}
 
   [[nodiscard]] const char *what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW override {
     return "It should never be printed";
   }
 
  protected:
-  const std::filesystem::path &path;
+  const std::filesystem::path &path_;
 };

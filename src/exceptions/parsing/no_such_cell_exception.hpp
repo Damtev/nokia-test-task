@@ -5,7 +5,7 @@
 #pragma once
 
 #include "parsing_exception.hpp"
-#include "../../table/global_constants.hpp"
+#include "../../global_constants.hpp"
 #include "../../table/table.hpp"
 
 class NoSuchCellException final : public ParsingException {

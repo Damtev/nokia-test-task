@@ -4,7 +4,7 @@
 
 #pragma once
 
-extern inline const char *const kLineSeparator() {
+extern inline const char *kLineSeparator() {
 #ifdef _WIN32
   return "\r\n";
 #elif __linux__

@@ -9,7 +9,7 @@
 
 int main(int argc, char *argv[]) {
   if (argc < 2) {
-    std::cout << "Expected at least 1 argument - path to CSV file";
+    std::cout << "Expected at least 1 argument - path_ to CSV file";
     return 0;
   }
 
@@ -22,6 +22,8 @@ int main(int argc, char *argv[]) {
       std::cerr << "[Parsing error]: " << parsing_exception.what() << std::endl;
     } catch (const EvaluationException &evaluation_exception) {
       std::cerr << "[Evaluation error]: " << evaluation_exception.what() << std::endl;
+    } catch (std::exception &exception) {
+      std::cerr << "[Runtime error]: " << exception.what() << std::endl;
     }
   }
 

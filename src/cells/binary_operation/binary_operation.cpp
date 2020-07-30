@@ -41,6 +41,10 @@ long long int BinaryOperation::Evaluate() {
     throw RecursionException(this);
   }
 
+  if (!(first_operand_ && second_operand_)) {
+    throw std::runtime_error("Nullptr caught at evaluation binary operation");
+  }
+
   state_ = EvaluationState::kEvaluating;
   evaluated_value = Operation(first_operand_->Evaluate(), second_operand_->Evaluate());
   return evaluated_value.value();

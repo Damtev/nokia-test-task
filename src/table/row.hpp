@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <vector>
 #include "../../src/cells/cell.hpp"
-#include "global_constants.hpp"
+#include "../global_constants.hpp"
 
 struct Row {
   std::unordered_map<std::string, cell::Cell *> cells_;

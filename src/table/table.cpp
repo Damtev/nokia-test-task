@@ -44,7 +44,7 @@ void Table::Parse(const path &path, Table &table) {
   try {
     ParseHeader(path, file_stream, table);
     ParseRows(path, file_stream, table);
-  } catch (const ParsingException &parsing_exception) {
+  } catch (const ParsingException &) {
     file_stream.close();
     std::exception_ptr parsing_exception_ptr = std::current_exception();
     std::rethrow_exception(parsing_exception_ptr);
@@ -138,14 +138,14 @@ void Table::SetCellOperands(const std::filesystem::path &path,
     Row *row = table.rows_[row_id];
     for (const std::string &column_id : row->column_ids_) {
       TablePosition cell_table_position(column_id, row_id);
-      const std::string cell_value_string = cell_value_strings.at(cell_table_position);
+      const std::string &cell_value_string = cell_value_strings.at(cell_table_position);
       std::regex binary_operation_regex(kBinaryOperatorsRegex);
       std::smatch operator_match;
       if (!std::regex_search(cell_value_string, operator_match, binary_operation_regex)) {
         continue;
       }
 
-      BinaryOperation *binary_operation = dynamic_cast<BinaryOperation *>(row->cells_[column_id]);
+      auto *binary_operation = dynamic_cast<BinaryOperation *>(row->cells_[column_id]);
       std::string first_operand_string = operator_match.prefix().str().substr(1); // skip '='
       std::string second_operand_string = operator_match.suffix().str();
 
@@ -165,7 +165,7 @@ void Table::SetCellOperands(const std::filesystem::path &path,
   }
 }
 
-Cell *Table::GetOperand(const std::string operand_string,
+Cell *Table::GetOperand(const std::string &operand_string,
                         const path &path,
                         Table &table,
                         const std::string &cell_value_string,
